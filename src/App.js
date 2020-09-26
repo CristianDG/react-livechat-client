@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
 import ChatLog from './components/ChatLog.js';
+import { getComments } from './services/api.js';
 import './App.css';
 
 // input
@@ -15,7 +16,7 @@ function App() {
 
     return (
       <div>
-          <ChatLog/>
+          <ChatLog comments={getComments()}/>
       </div>
     );
 }

@@ -1,34 +1,9 @@
 import React, { useState } from 'react'
+import InputMessage from './InputMessage.js';
 
-const InputMessage = ({uid, sendMessage}) => {
+const ChatLog = ({comments}) => {
 
-    const [message, setMessage] = useState("")
-
-    function submitMessage(message){
-        sendMessage(message)
-        setMessage("")
-    }
-
-    return (
-        <>
-
-            <input
-                placeholder="escreva algo"
-                value={message}
-                onChange={ (e) => setMessage(e.target.value) }
-            />
-            <button
-                onClick={() => (submitMessage({uid, message}))}>
-                    {'>'}
-            </button>
-
-        </>
-    );
-}
-
-const ChatLog = () => {
-
-    let [messages, setMessages] = useState([{uid: 0, message: "opa!"},{uid: 1, message: "eae"}])
+    let [messages, setMessages] = useState(comments)
 
     return (
         <>
