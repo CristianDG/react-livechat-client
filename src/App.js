@@ -1,12 +1,13 @@
 // eslint-disable-next-line
 import React, { useState, useEffect } from 'react';
 import ChatLog from './components/ChatLog.js';
-import { getComments } from './services/api.js';
 import './App.css';
 
-// input
+// input done!
 // message
-// chat history
+// chat history done?
+// send information to server done!
+// style
 //
 // TODO: depois
 // ws
@@ -14,9 +15,14 @@ import './App.css';
 
 function App() {
 
+    let [user, setUser] = useState(null)
+
+    useEffect(() => setUser({name: "CristianDG", uid: 0}) ,[])
+
+
     return (
       <div>
-          <ChatLog comments={getComments()}/>
+          { user ? <ChatLog user={user}/> : <h1>Faça o login primeiro</h1>}
       </div>
     );
 }

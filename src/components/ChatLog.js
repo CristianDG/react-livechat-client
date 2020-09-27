@@ -1,20 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import InputMessage from './InputMessage.js';
+import { getComments, postMessage } from '../services/api.js';
 
-const ChatLog = ({comments}) => {
 
-    let [messages, setMessages] = useState(comments)
+const ChatLog = ({user}) => {
+
+    let [messages, setMessages] = useState([])
+
+    let [lastMessage, setLastMessage] = useState({})
+
+    useEffect(()=>{
+        (async function(){
+            setMessages(await getComments())
+        })()
+    }, [lastMessage])
+
+    async function sender(text){
+        let message = {uid: user.uid, text}
+        await postMessage(message)
+        setLastMessage(message)
+    }
+
+    console.log(messages)
+
 
     return (
         <>
-        <ul>
-            {messages.map((m) => (<li>{m.message}</li>))}
-        </ul>
-        <InputMessage
-            uid={0}
-            sendMessage={message => setMessages(a => [...a, message]) }/>
-        </>
 
+        <ul>
+            {messages.map((m) => (<li key={m.id}>{m.text}</li>))}
+        </ul>
+        <InputMessage sendMessage={sender}/>
+
+        </>
     );
 }
 
