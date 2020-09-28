@@ -10,27 +10,32 @@ const ChatLog = ({user}) => {
     let [lastMessage, setLastMessage] = useState({})
 
     useEffect(()=>{
-        (async function(){
-            setMessages(await getComments())
-        })()
+        (async () => setMessages(await getComments()) )()
+    }, [])
+
+    // no lugar de baixar tudo, recebe somente a mensagem de volta do servidor
+    useEffect(()=>{
+        setMessages(a => a.concat(lastMessage))
     }, [lastMessage])
 
-    async function sender(text){
+    async function messageSender(text){
         let message = {uid: user.uid, text}
-        await postMessage(message)
-        setLastMessage(message)
+        let result = await postMessage(message)
+        if(result){
+            setLastMessage(result)
+        }//TODO: error handling?
     }
-
-    console.log(messages)
-
 
     return (
         <>
 
         <ul>
-            {messages.map((m) => (<li key={m.id}>{m.text}</li>))}
+            {   /*TODO: acredito que isso pode dar erro quando só tem uma mensagem no servidor, mas não tenho certeza*/ 
+                messages.length > 1
+                ? messages.map((m) => (<li key={m.id.toString()}>{m.text}</li>))
+                : <></> }
         </ul>
-        <InputMessage sendMessage={sender}/>
+        <InputMessage sendMessage={messageSender}/>
 
         </>
     );
