@@ -1,0 +1,21 @@
+.message-input { 
+    display: flex;
+    justify-content: space-around;
+    background: #bbb;
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.message-input input {
+    border: 0; 
+    padding: 10px;
+    width: 90%;
+    margin-right: 0.5%;
+}
+.message-input button {
+    width: 9%;
+    background: rgb(130, 224, 255);
+    border: none;
+    padding: 10px; 
+}

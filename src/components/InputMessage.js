@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './InputMessage.css'
 
 const InputMessage = ({sendMessage}) => {
 
@@ -21,7 +22,7 @@ const InputMessage = ({sendMessage}) => {
 
     return (
         <>
-            <form onSubmit={ (e) => {e.preventDefault(); submitMessage()} }>
+            <form className="message-input" onSubmit={ (e) => {e.preventDefault(); submitMessage()} }>
                 <input
                     placeholder="escreva algo"
                     value={message}

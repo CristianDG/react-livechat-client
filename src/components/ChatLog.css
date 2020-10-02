@@ -1,0 +1,20 @@
+
+#messages {
+    overflow: visible;
+    list-style-type: none;
+    margin: 20px 20px 50px 25px;
+    padding: 0;
+}
+
+#messages li { 
+    padding: 5px 10px;
+}
+
+.others-message {
+    background: #eee;
+}
+
+.my-messages{
+    display: flex;
+    justify-content: flex-end;
+}

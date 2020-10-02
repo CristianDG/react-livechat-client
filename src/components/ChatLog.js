@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import InputMessage from './InputMessage.js';
 import { getComments, postMessage } from '../services/api.js';
+import './ChatLog.css';
 
 
 const ChatLog = ({user}) => {
@@ -10,6 +11,7 @@ const ChatLog = ({user}) => {
     let [lastMessage, setLastMessage] = useState({})
 
     useEffect(()=>{
+        // #lisp
         (async () => setMessages(await getComments()) )()
     }, [])
 
@@ -29,11 +31,14 @@ const ChatLog = ({user}) => {
     return (
         <>
 
-        <ul>
+        <ul id="messages">
             {   /*TODO: acredito que isso pode dar erro quando só tem uma mensagem no servidor, mas não tenho certeza*/ 
                 messages.length > 1
-                ? messages.map((m) => (<li key={m.id.toString()}>{m.text}</li>))
-                : <></> }
+                    ? messages.map((m) => (
+                        m.uid !== user.uid 
+                            ? <li className="others-message" key={m.id.toString()}>{`${m.name}: ${m.text}`}</li>
+                            : <li className="my-messages" key={m.id.toString()}>{m.text}</li>))
+                    : <></> }
         </ul>
         <InputMessage sendMessage={messageSender}/>
 

@@ -4,17 +4,6 @@ import ChatLog from './components/ChatLog.js';
 import { logInUser } from './services/api.js';
 import './App.css';
 
-// [X] input
-// [ ] message style
-// [?] chat history
-// [X] send information to server
-// [ ] style
-// [X] localStorage user caching
-// [X] login
-// [ ] register
-//
-// TODO: depois
-// ws
 
 function LoginPage({sendUser}) {
 
@@ -40,6 +29,7 @@ function LoginPage({sendUser}) {
             <form onSubmit={(e)=>{e.preventDefault(); validateAndSend()}}>
                 <label htmlFor="usrName">User Name: </label>
                 <input
+                    autoComplete="off"
                     name="usrName" 
                     type="text" 
                     value={userName}
@@ -78,16 +68,18 @@ function App() {
     }
 
     return (
-      <div className="screen-centered">
+      <>
           {
             user
                 ? <>
+                    <nav>
+                        <button className="exit-button" onClick={userExit}>Sair</button>
+                    </nav>
                     <ChatLog user={user}/>
-                    <button onClick={userExit}>Sair</button>
                   </>
                 : <LoginPage sendUser={userSender}/>
           }
-      </div>
+      </>
     );
 }
 
