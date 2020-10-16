@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import InputMessage from './InputMessage.js';
-import { getComments, postMessage } from '../services/api.js';
+import { socket, getComments, postMessage } from '../services/api.js';
+
 import './ChatLog.css';
 
 
@@ -10,8 +11,11 @@ const ChatLog = ({user}) => {
 
     let [lastMessage, setLastMessage] = useState({})
 
+    socket.on("postedMessage", data => setLastMessage(data))
+
     useEffect(()=>{
         // #lisp
+        // TODO connect the user and get the messages via WS
         (async () => setMessages(await getComments()) )()
     }, [])
 
@@ -22,10 +26,7 @@ const ChatLog = ({user}) => {
 
     async function messageSender(text){
         let message = {uid: user.uid, text}
-        let result = await postMessage(message)
-        if(result){
-            setLastMessage(result)
-        }//TODO: error handling?
+        postMessage(message)
     }
 
     return (

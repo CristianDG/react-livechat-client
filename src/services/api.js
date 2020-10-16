@@ -1,5 +1,11 @@
+import socketIOClient from 'socket.io-client';
 
-const uri = 'http://localhost:8080/api'
+// TODO: lembrar que nessa etrutura de função usando const = sem side effects
+let localIP = '192.168.0.113'
+export const base = `http://${localIP}:8080`
+export const socket = socketIOClient(base)
+const uri = `${base}/api`
+
 
 const makeOptions = (message) => ({ 
     headers:{
@@ -12,7 +18,7 @@ const makeOptions = (message) => ({
     body: JSON.stringify({data: message}),
 });
 
-async function fetchJSON(route, options){
+const fetchJSON = async (route, options) => {
     let response = await fetch(`${uri}${route}`, options)
     return await response.json()
 }
@@ -27,10 +33,11 @@ export async function logInUser(userName){
 }
 
 export async function postMessage(message){
-    return await fetchJSON('/messages', makeOptions(message));
+    socket.emit("postMessage", message);
 }
 
 export const getComments = async () => {
     return await fetchJSON('/messages',{ method: 'GET' })
 }
+
 
