@@ -4,7 +4,6 @@ import { socket, getComments, postMessage } from '../services/api.js';
 
 import './ChatLog.css';
 
-
 const ChatLog = ({user}) => {
 
     let [messages, setMessages] = useState([])
